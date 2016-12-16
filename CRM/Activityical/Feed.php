@@ -221,6 +221,7 @@ class CRM_Activityical_Feed {
     $query = "
       SELECT
         contact_primary.id as contact_id,
+        users.timezone as timezone,
         civicrm_activity.id,
         source.id AS source_id,
         source.display_name AS `source_display_name`,
@@ -252,6 +253,14 @@ class CRM_Activityical_Feed {
             civicrm_activity.id = activity_assignment.activity_id
             AND civicrm_activity.is_deleted = 0
             AND civicrm_activity.is_current_revision = 1
+          )
+        INNER JOIN civicrm_uf_match civicrm_uf_match
+          ON (
+            civicrm_uf_match.contact_id = contact_primary.id
+          )
+        INNER JOIN drupal.users users
+          ON (
+            users.uid = civicrm_uf_match.uf_id
           )
         INNER JOIN civicrm_activity_contact activity_source
           ON (
@@ -309,9 +318,6 @@ class CRM_Activityical_Feed {
         $description[] = 'Other assignees: '. $row['other_assignees'];
       }
       $row['description'] = implode("\n", $description);
-
-      // FIXME: how to handle timezones?
-      // $row['activity_date_time'] = civicrm_activity_contact_datetime_to_utc($row['activity_date_time'], $this->contact_id);
 
       $return[] = $row;
     }
