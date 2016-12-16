@@ -1,8 +1,8 @@
-# CiviCRM Activity iCalendar Feed
+# CiviCRM Activity iCalendar Feed - With Timezone Solution for Drupal
 
 ## Overview
 
-Several people have expressed interest in getting their CiviCRM assigned activities into their Google Calendar or similar calendaring applications. This extension fills that purpose by providing a feed of each user's assigned activities in iCalendar format, ready to be subscribed to with Google Calendar and/or Outlook.
+This is a copy of https://github.com/twomice/com.joineryhq.activityical as of Dec 16 2016 with just one minor change, the timezone issue where the Google Calendar pulls the dates as GMT has been resolved for Drupal sites. On this version the iCal feed uses the contact's related user-defined timezone and defines it as the TZID value on the feed. If there's no timezone defined for that user, the TZID defaults to America/New York.
 
 
 ## Key Features
